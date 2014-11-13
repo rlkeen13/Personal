@@ -101,8 +101,29 @@ var maps = ["Danger Canyon",
 "Wreckage"];
 
 var gametype = ["Slayer", "Capture the Flag", "Assault", "King of the Hill", "Oddball"];
+var singleType = ["Slayer", "King of the Hill", "Oddball"];
+
+var players = ["Redfire", "Faust", "Equally", "ARay", "DMan"];
+var redTeam = [];
+var blueTeam = [];
 
 var map = maps[Math.floor((Math.random() * maps.length))];
-var type = gametype[Math.floor((Math.random() * gametype.length))];
+if(players.length % 2 == 0){
+    var type = gametype[Math.floor((Math.random() * gametype.length))];
 
-alert("Map: " + map + " Game: " + type);
+
+    while(!players.length == 0){
+        var playerNumber = Math.floor((Math.random() * players.length));
+        redTeam.push(players[playerNumber]);
+        players.splice(playerNumber, 1);
+        playerNumber = Math.floor((Math.random() * players.length));
+        blueTeam.push(players[playerNumber]);
+        players.splice(playerNumber, 1);
+    }
+}
+else{
+    var type = singleType[Math.floor((Math.random() * singleType.length))];
+}
+    
+
+alert("Map: \n" + map + "\n\nGame: \n" + type + "\n\nBlue Team: \n" + blueTeam + "\n\nRed Team: \n" + redTeam);
