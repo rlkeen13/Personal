@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Halo Template</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="initialize()">
+<div id="container">
+	<div id="header">
+		<div id="logo">
+		
+		</div>
+		<div id="topright">
+			<div id="nav">
+				<ul>
+					<li><a href="http://www.freewebsitetemplates.com">343</a></li>
+					<li><a href="http://www.freewebsitetemplates.com">Really </a></li>
+					<li><a href="http://www.freewebsitetemplates.com">Screwed</a></li>
+					<li><a href="http://www.freewebsitetemplates.com">This</a></li>
+					<li><a href="http://www.freewebsitetemplates.com">Game</a></li>
+					<li><a href="http://www.freewebsitetemplates.com">Up</a></li>
+				</ul>
+				<div style="clear:both"></div>
+			</div>
+			<div id="contenttr">
+						<table border="0" cellspacing="3" cellpadding="5">
+							<tr>
+							<td><select name="games" id ="games" size = "5" multiple>
+								<option value="halo1">Halo 1</option>
+								<option value="halo2">Halo 2</option>
+								<option value="halo3">Halo 3</option>
+								<option value="halo4">Halo 4</option>
+							</select></td>
+							<td><button onclick="addMaps()">Add Maps</button>
+							<button onclick="removeMaps()"> Remove</button></td>
+							<td><select name="maps" id = "maps" size = "5" multiple>
+							</select></td>
+							</tr>
+							<tr>
+							<td><select name="type" id="type" size = "5" multiple>
+							</select>
+							<td><button onclick="addType()">Add Type</button>
+							<button onclick="removeType()">Remove</button></td>
+							<td><select name="selectedType" id = "selectedType" size = "5" multiple></td>
+							</select>
+							</tr>
+							<tr>
+							<td><input type="text" id="newPlayer" size="5">Player Name</td>
+							<td><button onclick="addPlayer()">Add Player</button>
+							<button onclick="removePlayer()">Remove</button></td>
+							<td><select name="playerNames" id="playerNames" size="5" multiple></td>
+							</tr>
+							</table>
+	</p>
+	<p>
+	<button onclick="generateMatch()">Generate</button>
+	<button onclick="clearMaps()">Clear Maps</button>
+	<button onclick="clearTypes()">Clear Types</button>
+	<button onclick="clearNames()">Clear Names</button>
+	<button onclick="clearEverything()">Clear Everything</button>
+	</p>
+<script>
+	var halo1 = ["Danger Canyon",
+		"Death Island",
+		"Gephyrophobia",
+		"Ice Fields",
+		"Infinity",
+		"Timberland",
+		"District",
+		"Example",
+		"Uplift",
+		"Battle Creek",
+		"Blood Gulch",
+		"Boarding Action",
+		"Chill Out",
+		"Chiron TL-34",
+		"Damnation",
+		"Derelict",
+		"Hang 'Em High",
+		"Longest",
+		"Prisoner",
+		"Rat Race",
+		"Sidewinder",
+		"Wizard"];
+	var halo2 = ["Ascension",
+		"Backwash",
+		"Beaver Creek",
+		"Burial Mounds",
+		"Coagulation",
+		"Colossus",
+		"Containment",
+		"Desolation",
+		"Elongation",
+		"Foundation",
+		"Gemini",
+		"Headlong",
+		"Ivory Tower",
+		"Lockout",
+		"Midship",
+		"Relic",
+		"Sanctuary",
+		"Terminal",
+		"Tombstone",
+		"Turf",
+		"Warlock",
+		"Waterworks"];
+	var halo3 = ["Assembly",
+		"Avalanche",
+		"Blackout",
+		"Boundless",
+		"Citadel",
+		"Cold Storage",
+		"Construct",
+		"Epilogue",
+		"Epitaph",
+		"Foundry",
+		"Ghost Town",
+		"Guardian",
+		"Heretic",
+		"High Ground",
+		"Isolation",
+		"Last Resort",
+		"Longshore",
+		"Onslaught",
+		"Orbital",
+		"Pit Stop",
+		"Rat's Nest",
+		"Sandbox",
+		"Sandtrap",
+		"Snowbound",
+		"Standoff",
+		"The Pit",
+		"Valhalla"];
+	var halo4 = ["Abandon",
+		"Adrift",
+		"Ascent",
+		"Complex",
+		"Daybreak",
+		"Erosion",
+		"Exile",
+		"Forge Island",
+		"Grifball Court",
+		"Harvest",
+		"Haven",
+		"Impact",
+		"Landfall",
+		"Longbow",
+		"Meltdown",
+		"Monolith",
+		"Outcast",
+		"Perdition",
+		"Pitfall",
+		"Ragnarok",
+		"Ravine",
+		"Relay",
+		"Settler",
+		"Shatter",
+		"Skyline",
+		"Solace",
+		"Vertigo",
+		"Vortex",
+		"Wreckage"];
+	
+	var gametype = ["Slayer", "Capture the Flag", "Assault", "King of the Hill", "Oddball"];
+	var singleType = ["Slayer", "King of the Hill", "Oddball"];
+		
+	var gameBox = document.getElementById('games');
+	var mapBox = document.getElementById('maps');	
+	var typeBox = document.getElementById('type');
+	var selectTypeBox = document.getElementById('selectedType');
+	var nameBox = document.getElementById('newPlayer');
+	var addedPlayerBox = document.getElementById('playerNames');
+	
+	function initialize() {
+		for(var i = 0; i < gametype.length; i++){
+			var opt = document.createElement('option');
+			opt.innerHTML = gametype[i];
+			opt.value = gametype[i];
+			typeBox.appendChild(opt);
+		}
+	}
+	
+	function addPlayer(){
+		var name = nameBox.value;
+		var opt = document.createElement('option');
+		opt.innerHTML = name;
+		opt.value = name;
+		addedPlayerBox.appendChild(opt);
+		nameBox.value = "";
+	}
+	
+	function removePlayer(){
+			if(addedPlayerBox.options.selectedIndex<0){
+			alert("No Player Selected");
+			return false;
+		}
+		addedPlayerBox.options[addedPlayerBox.selectedIndex] = null;
+	}
+	
+	function addType() {
+		if(typeBox.options.selectedIndex<0){
+			alert("No Type Selected");
+			return false;
+		}
+		
+		var val_box1=typeBox.options[typeBox.selectedIndex].value;
+		var opt = document.createElement('option');
+		opt.innerHTML = val_box1;
+		opt.value = val_box1;
+		selectTypeBox.appendChild(opt);
+	}
+	
+	function removeType() {
+		if(selectTypeBox.options.selectedIndex<0){
+			alert("No Map Selected");
+			return false;
+		}
+		selectTypeBox.options[selectTypeBox.selectedIndex] = null;
+	}
+		
+	function addMaps() {
+		var mapArray;
+		if(gameBox.options.selectedIndex<0){
+			alert("No Game Selected");
+			return false;
+		}
+
+		var val_box1=gameBox.options[gameBox.selectedIndex].value;
+		
+		if(val_box1 == "halo1"){
+			mapArray = halo1;
+		}
+		else if(val_box1 == "halo2"){
+			mapArray = halo2;
+		}
+		else if(val_box1 == "halo3"){
+			mapArray = halo3;
+		}
+		else{
+			mapArray = halo4;
+		}
+		for(var i = 0; i < mapArray.length; i++){
+			var opt = document.createElement('option');
+			opt.innerHTML = mapArray[i];
+			opt.value = mapArray[i];
+			mapBox.appendChild(opt);
+		}
+	}
+		
+	function removeMaps() {
+
+		if(mapBox.options.selectedIndex<0){
+			alert("No Map Selected");
+			return false;
+		}
+		mapBox.options[mapBox.selectedIndex] = null;
+	}
+	
+	function clearMaps(){
+		mapBox.options.length = 0;
+	}
+	
+	function clearTypes(){
+		selectTypeBox.options.length = 0;
+	}
+	
+	function clearNames(){
+		addedPlayerBox.options.length = 0;
+	}
+	
+	function clearEverything(){
+		clearMaps();
+		clearTypes();
+		clearNames();
+	}
+	
+	function generateMatch() {
+		var maps = [];
+		var types = [];
+		var players = [];
+		var redTeam = [];
+		var blueTeam = [];
+		
+		var options = mapBox.options;
+		for(var i = 0; i < options.length; i++){
+			var value = options[i].value;
+			maps.push(value);
+		}
+		
+		options = selectTypeBox.options;
+		for(var i = 0; i < options.length; i++){
+			var value = options[i].value;
+			types.push(value);
+		}
+		
+		options = addedPlayerBox.options;
+		for(var i = 0; i < options.length; i++){
+			var value = options[i].value;
+			players.push(value);
+		}
+
+		var map = maps[Math.floor((Math.random() * maps.length))];
+		var type = types[Math.floor((Math.random() * types.length))];
+
+    while(!players.length == 0 && players.length % 2 == 0){
+        var playerNumber = Math.floor((Math.random() * players.length));
+        redTeam.push(players[playerNumber]);
+        players.splice(playerNumber, 1);
+        playerNumber = Math.floor((Math.random() * players.length));
+        blueTeam.push(players[playerNumber]);
+        players.splice(playerNumber, 1);
+    }  
+
+		alert("Map: \n" + map + "\n\nGame Type: \n" + type + "\n\nRed Team: \n" + redTeam + "\n\nBlue Team: \n" + blueTeam);
+}
+</script>
+
+			</div>
+		</div>
+	</div>
+	<div id="bottom">
+	</div>	
+</div>
+</body>
+</html>
